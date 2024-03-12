@@ -4,7 +4,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
 <style>
-  *{transition: all .3s ease;}
 .dropbtn {
   background-color: #04AA6D;
   color: white;
@@ -19,13 +18,15 @@
 }
 
 .dropdown-content {
-  display: none;
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   top: 70px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 .dropdown-content a {
@@ -36,6 +37,11 @@
 }
 
 .dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {
+  opacity: 1; 
+  visibility: visible;
+}
 
 </style>
 </head>
@@ -72,12 +78,12 @@ $(document).ready(function() {
     function() {
       // Mouse enters a dropdown
       if (currentDropdown) {
-        // Hide the previous dropdown
-        currentDropdown.find(dropdownContent).css('display', 'none');
+        // Hide the previous dropdown smoothly
+        currentDropdown.find(dropdownContent).css('opacity', 0);
         currentDropdown.find(dropBtn).css("background-color", "#04AA6D");
       }
       $(this).find(dropBtn).css("background-color", "#3e8e41");
-      $(this).find(dropdownContent).css('display', 'block');
+      $(this).find(dropdownContent).css('opacity', 1);
       currentDropdown = $(this);
     },
     function() {
@@ -85,14 +91,14 @@ $(document).ready(function() {
       setTimeout(() => {
         if (!currentDropdown.is(':hover')) {
           currentDropdown.find(dropBtn).css("background-color", "#04AA6D");
-          currentDropdown.find(dropdownContent).css('display', 'none');
+          currentDropdown.find(dropdownContent).css('opacity', 0);
           currentDropdown = null;
         }
       }, 300);
     }
   );
 });
-    
+
 </script>
 </body>
 </html>
