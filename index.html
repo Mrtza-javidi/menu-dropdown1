@@ -89,7 +89,7 @@ $(document).ready(function() {
     function() {
       // Mouse leaves a dropdown
       setTimeout(() => {
-        if (!currentDropdown.is(':hover')) {
+      if (currentDropdown && !currentDropdown.is(':hover')) {
           currentDropdown.find(dropBtn).css("background-color", "#04AA6D");
           currentDropdown.find(dropdownContent).css('opacity', 0);
           currentDropdown = null;
