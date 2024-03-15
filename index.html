@@ -17,7 +17,7 @@
   display: inline-block;
 }
 
-.dropdown-content {
+.dropdown-content, .child-menu {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
@@ -43,6 +43,21 @@
   visibility: visible;
 }
 
+
+
+.sub-dropdown-content{position: relative;}
+
+.sub-dropdown-content:hover > .child-menu{
+  opacity: 1;
+  visibility: visible;
+}
+
+.child-menu{
+  top: 0; 
+  left: 170px;
+}
+
+
 </style>
 </head>
 <body style="background-color:white;">
@@ -53,9 +68,22 @@
 <div class="dropdown">
   <button class="dropbtn">Dropdown</button>
   <div class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
+    <div class="sub-dropdown-content"><a href="#">Link 1</a>
+      <div class="child-menu">
+        <a href="#" class="child-link">child link 1</a>
+        <a href="#" class="child-link">child link 2</a>
+        <a href="#" class="child-link">child link 3</a>
+      </div>
+    </div>
+    <div class="sub-dropdown-content"><a href="#">Link 2</a>
+      <div class="child-menu">
+        <a href="#" class="child-link">child 1</a>
+        <a href="#" class="child-link">child 2</a>
+        <a href="#" class="child-link">child 3</a>
+      </div>
+    </div>
+    <div class="sub-dropdown-content"><a href="#">Link 3</a></div>
+
   </div>
 </div>
 <div class="dropdown">
@@ -71,20 +99,19 @@
 
 
 $(document).ready(function() {
-
-
   const $myDropdowns = $('.dropdown'); // Replace with your dropdown elements
   const dropBtn = $(".dropdown .dropbtn");
   const dropdownContent = $(".dropdown-content");
   let currentDropdown = null;
-  let hideDropdownTimer;
+  let hideDropdownTimer1;
+
 
   $myDropdowns.mouseenter(
     function() {
       // Mouse enters a dropdown
       if (currentDropdown) {
         // Hide the previous dropdown smoothly
-        clearTimeout(hideDropdownTimer);
+        clearTimeout(hideDropdownTimer1);
         currentDropdown.find(dropdownContent).css({'opacity': 0, 'visibility': 'hidden'});
         currentDropdown.find(dropBtn).css("background-color", "#04AA6D");
       }
@@ -93,15 +120,41 @@ $(document).ready(function() {
       currentDropdown = $(this);
       }).mouseleave(function() {
       // Mouse leaves a dropdown
-      hideDropdownTimer = setTimeout(() => {
+      hideDropdownTimer1 = setTimeout(() => {
         if (currentDropdown && !currentDropdown.is(':hover')) {
           currentDropdown.find(dropBtn).css("background-color", "#04AA6D");
           currentDropdown.find(dropdownContent).css({'opacity': 0, 'visibility': 'hidden'});
           currentDropdown = null;
         }
-      }, 500);
+      }, 1000);
     });
-  
+
+
+    const subDropdownContent = $(".sub-dropdown-content")
+    const childMenu = $(".child-menu")
+    let currentDropdownContent = null;
+    let hideSubDropdownContentTimer2;
+
+    subDropdownContent.mouseenter(
+    function() {
+      // Mouse enters a dropdown
+      if (currentDropdownContent) {
+        // Hide the previous dropdown smoothly
+        clearTimeout(hideSubDropdownContentTimer2);
+        currentDropdownContent.find(childMenu).css({'opacity': 0, 'visibility': 'hidden'});
+      }
+      $(this).find(childMenu).css({'opacity': 1, 'visibility': 'visible'});
+      currentDropdownContent = $(this);
+      }).mouseleave(function() {
+      // Mouse leaves a dropdown
+      hideSubDropdownContentTimer2 = setTimeout(() => {
+        if (currentDropdownContent && !currentDropdownContent.is(':hover')) {
+          currentDropdownContent.find(childMenu).css({'opacity': 0, 'visibility': 'hidden'});
+          currentDropdownContent = null;
+        }
+      }, 300);
+    });
+    
 });
 
 </script>
