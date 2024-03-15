@@ -57,6 +57,19 @@
   left: 170px;
 }
 
+.show{
+  opacity: 1; 
+  visibility: visible;
+}
+
+.hide{
+  opacity: 0; 
+  visibility: hidden;
+}
+
+.regular-dropdown-background{background-color: #04AA6D;}
+.hovered-dropdown-background{background-color: #3e8e41;}
+
 
 </style>
 </head>
@@ -112,18 +125,18 @@ $(document).ready(function() {
       if (currentDropdown) {
         // Hide the previous dropdown smoothly
         clearTimeout(hideDropdownTimer1);
-        currentDropdown.find(dropdownContent).css({'opacity': 0, 'visibility': 'hidden'});
-        currentDropdown.find(dropBtn).css("background-color", "#04AA6D");
+        currentDropdown.find(dropdownContent).removeClass("show").addClass("hide");
+        currentDropdown.find(dropBtn).removeClass("hovered-dropdown-background").addClass("regular-dropdown-background");
       }
-      $(this).find(dropBtn).css("background-color", "#3e8e41");
-      $(this).find(dropdownContent).css({'opacity': 1, 'visibility': 'visible'});
+      $(this).find(dropBtn).removeClass("regular-dropdown-background").addClass("hovered-dropdown-background");
+      $(this).find(dropdownContent).removeClass("hide").addClass("show");
       currentDropdown = $(this);
       }).mouseleave(function() {
       // Mouse leaves a dropdown
       hideDropdownTimer1 = setTimeout(() => {
         if (currentDropdown && !currentDropdown.is(':hover')) {
-          currentDropdown.find(dropBtn).css("background-color", "#04AA6D");
-          currentDropdown.find(dropdownContent).css({'opacity': 0, 'visibility': 'hidden'});
+          currentDropdown.find(dropBtn).removeClass("hovered-dropdown-background").addClass("regular-dropdown-background");
+          currentDropdown.find(dropdownContent).removeClass("show").addClass("hide");
           currentDropdown = null;
         }
       }, 1000);
@@ -141,15 +154,15 @@ $(document).ready(function() {
       if (currentDropdownContent) {
         // Hide the previous dropdown smoothly
         clearTimeout(hideSubDropdownContentTimer2);
-        currentDropdownContent.find(childMenu).css({'opacity': 0, 'visibility': 'hidden'});
+        currentDropdownContent.find(childMenu).removeClass("show").addClass("hide");
       }
-      $(this).find(childMenu).css({'opacity': 1, 'visibility': 'visible'});
+      $(this).find(childMenu).removeClass("hide").addClass("show");
       currentDropdownContent = $(this);
       }).mouseleave(function() {
       // Mouse leaves a dropdown
       hideSubDropdownContentTimer2 = setTimeout(() => {
         if (currentDropdownContent && !currentDropdownContent.is(':hover')) {
-          currentDropdownContent.find(childMenu).css({'opacity': 0, 'visibility': 'hidden'});
+          currentDropdownContent.find(childMenu).removeClass("show").addClass("hide");
           currentDropdownContent = null;
         }
       }, 300);
