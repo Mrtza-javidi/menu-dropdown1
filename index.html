@@ -99,16 +99,8 @@ $(document).ready(function() {
           currentDropdown.find(dropdownContent).css({'opacity': 0, 'visibility': 'hidden'});
           currentDropdown = null;
         }
-      }, 3000);
+      }, 500);
     });
-
-    $('.dropdown-content').mouseleave(function() {
-    // Start a timeout to hide the dropdown content after 3 seconds
-    setTimeout(function() {
-      $(this).css({'opacity': 0, 'visibility': 'hidden'});
-    }, 3000); // Delay in milliseconds
-  });
-    
   
 });
 
